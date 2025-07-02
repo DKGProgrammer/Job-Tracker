@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Edit Application</h2>
+<form method="post">
+    <input type="text" name="company" value="{{ app[2] }}" required>
+    <input type="text" name="position" value="{{ app[3] }}" required>
+    <input type="text" name="status" value="{{ app[4] }}" required>
+    <input type="date" name="date_applied" value="{{ app[5] }}" required>
+    <button type="submit">Update</button>
+</form>
+<a href="/dashboard">Cancel</a>
+{% endblock %}

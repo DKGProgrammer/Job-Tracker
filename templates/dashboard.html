@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>My Job Applications</h2>
+<form method="get" action="/search">
+    <input type="text" name="q" placeholder="Search...">
+    <button type="submit">Search</button>
+</form>
+<form method="post" action="/add" class="job-form">
+    <input type="text" name="company" placeholder="Company" required>
+    <input type="text" name="position" placeholder="Position" required>
+    <input type="text" name="status" placeholder="Status" required>
+    <input type="date" name="date_applied" required>
+    <button type="submit">Add</button>
+</form>
+<form method="post" action ="/filter_jobs" class="job-form">
+    <label> Choose an option:  </label>
+    <select id="filter_options" name = "filter_options">
+        <option value= "Default" >Default</option>
+        <option value= "Position" >Position</option>
+        <option value= "Company" >Company</option>
+        <option value= "Status" >Status</option>
+        <option value= "Date" >Date</option>
+    </select>
+    <button type ="submit" > Filter </button>
+
+</form>
+
+<table>
+    
+   
+    <tr><th>Company</th><th>Position</th><th>Status</th><th>Date</th><th>Actions</th></tr>
+    {% for app in applications %}
+    <tr>
+        <td>{{ app[2] }}</td><td>{{ app[3] }}</td><td>{{ app[4] }}</td><td>{{ app[5] }}</td>
+        <td>
+            <a href="/edit/{{ app[0] }}">Edit</a>
+            <a href="/delete/{{ app[0] }}" onclick="return confirm('Delete this entry?')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

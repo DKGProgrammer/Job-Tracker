@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>Search Real Job Listings</h2>
+<form method="post">
+    <input type="text" name="keyword" placeholder="e.g. Python developer" required>
+    <button type="submit">Search</button>
+</form>
+
+{% if results %}
+<h3>Results:</h3>
+<ul>
+    {% for job in results %}
+    <li>
+        <a href= {{job.url}} target="_blank"><strong>{{ job.title }}</strong></a> at <em>{{ job.company_name }}</em>
+        <br>
+            {%if job.job_type == "full_time"%}
+                Employment Type: Full Time
+            {%elif job.job_type == "part_time"%}
+                Employment Type: Part Time
+            {%else%}
+                Employment Type: {{job.job_type}}
+            {%endif%}
+        <br>
+        Location: {{ job.candidate_required_location }}<br>
+            Date Published: {{job.publication_date[0:10]}}
+        <br>
+        <form method="post" action="/save-job">
+            <input type="hidden" name="company" value="{{ job.company_name }}">
+            <input type="hidden" name="position" value="{{ job.title }}">
+            <input type="date" name="date_applied" required>
+            <button type="submit">Save to Tracker</button>
+        </form>
+    </li>
+    <hr>
+    {% endfor %}
+</ul>
+{% endif %}
+{% endblock %}
